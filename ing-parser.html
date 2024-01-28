@@ -29,148 +29,115 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script> -->
     <script src="assets/xlsx.full.min.js"></script>
     <script>
-        document.getElementById('drop-area').addEventListener('click', () => document.getElementById('fileInput').click());
-        document.getElementById('fileInput').addEventListener('change', handleFileSelect);
-        document.getElementById('convertButton').addEventListener('click', processFile);
+    document.getElementById('drop-area').addEventListener('click', () => document.getElementById('fileInput').click());
+document.getElementById('fileInput').addEventListener('change', handleFileSelect);
+document.getElementById('convertButton').addEventListener('click', processFile);
 
-        // Add event listeners for drag and drop
-        document.getElementById('drop-area').addEventListener('dragover', (event) => {
-            event.stopPropagation();
-            event.preventDefault();
-            event.dataTransfer.dropEffect = 'copy';
-        });
-        document.getElementById('drop-area').addEventListener('drop', (event) => {
-            event.stopPropagation();
-            event.preventDefault();
-            handleFileSelect(event);
-        });
+// Add event listeners for drag and drop
+document.getElementById('drop-area').addEventListener('dragover', (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'copy';
+});
 
-        let selectedFile;
+document.getElementById('drop-area').addEventListener('drop', (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+    handleFileSelect(event);
+});
 
-        function handleFileSelect(event) {
-            // Check if files were dropped or selected via input
-            selectedFile = (event.dataTransfer) ? event.dataTransfer.files[0] : event.target.files[0];
-            document.getElementById('file-name').textContent = ' ' + selectedFile.name;
+let selectedFile;
+
+function handleFileSelect(event) {
+    // Check if files were dropped or selected via input
+    selectedFile = (event.dataTransfer) ? event.dataTransfer.files[0] : event.target.files[0];
+    // Display the file name
+    document.getElementById('file-name').textContent = 'Selected File: ' + selectedFile.name;
+}
+
+function processFile() {
+    if (!selectedFile) {
+        alert("Please select a file first!");
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        const data = event.target.result;
+        const workbook = XLSX.read(data, { type: 'binary' });
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+        const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+        // Data extraction logic
+        const extractedData = extractData(jsonData);
+
+        // Output format logic
+        const outputFormat = document.getElementById('outputFormat').value;
+        switch(outputFormat) {
+            case 'json':
+                downloadFile(JSON.stringify(extractedData), 'output.json', 'application/json');
+                break;
+            case 'csv':
+                const csvOutput = arrayToCSV(extractedData);
+                downloadFile(csvOutput, 'output.csv', 'text/csv');
+                break;
+            case 'xlsx':
+                const newWorkbook = XLSX.utils.book_new();
+                const newWorksheet = XLSX.utils.json_to_sheet(extractedData);
+                XLSX.utils.book_append_sheet(newWorkbook, newWorksheet, 'Extracted Data');
+                XLSX.writeFile(newWorkbook, 'output.xlsx');
+                break;
         }
+    };
 
-        function processFile() {
-            if (!selectedFile) {
-                alert("Please select a file first!");
-                return;
-            }
+    reader.readAsBinaryString(selectedFile);
+}
 
-            const reader = new FileReader();
-            reader.onload = function (event) {
-                const data = event.target.result;
-                const workbook = XLSX.read(data, { type: 'binary' });
-                const firstSheetName = workbook.SheetNames[0];
-                const worksheet = workbook.Sheets[firstSheetName];
-                const jsonData = XLSX.utils.sheet_to_json(worksheet);
+function extractData(jsonData) {
+    const tipTranzactie = ["Cumparare POS", "Incasare", "Retragere numerar", "Taxe si comisioane", "Transfer", 
+                           "Transfer Home'Bank", "Depunere numerar", "Comision pe operatiune", "Schimb valutar", 
+                           "Acoperire sold", "Plata poprire", "Centralizare solduri", "Actualizare dobanda"];
 
-                // Data extraction logic
-                const extractedData = extractData(jsonData);
+    return jsonData.map(row => {
+        let extractedRow = {};
 
-                // Output format logic
-                const outputFormat = document.getElementById('outputFormat').value;
-                switch (outputFormat) {
-                    case 'json':
-                        downloadFile(JSON.stringify(extractedData), 'output.json', 'application/json');
-                        break;
-                    case 'csv':
-                        const csvOutput = arrayToCSV(extractedData);
-                        downloadFile(csvOutput, 'output.csv', 'text/csv');
-                        break;
-                    case 'xlsx':
-                        const newWorkbook = XLSX.utils.book_new();
-                        const newWorksheet = XLSX.utils.json_to_sheet(extractedData);
-                        XLSX.utils.book_append_sheet(newWorkbook, newWorksheet, 'Extracted Data');
-                        XLSX.writeFile(newWorkbook, 'output.xlsx');
-                        break;
-                }
-            };
+        // Process basic fields
+        extractedRow['Data'] = row['Data'];
+        extractedRow['Detalii tranzactie'] = row['Detalii tranzactie'];
+        extractedRow['Debit'] = row['Debit'];
+        extractedRow['Credit'] = row['Credit'];
+        extractedRow['Balanta'] = row['Balanta'];
 
-            reader.readAsBinaryString(selectedFile);
-        }
+        // Detect and set transaction type
+        let transactionType = tipTranzactie.find(tt => row['Detalii tranzactie'] && row['Detalii tranzactie'].startsWith(tt)) ||
+                               'NEW! ' + row['Detalii tranzactie'].split(' ').slice(0, 2).join(' ');
+        extractedRow['Tip tranzactie'] = transactionType;
 
-        function extractData(jsonData) {
-            const tipTranzactie = ["Cumparare POS", "Incasare", "Retragere numerar", "Taxe si comisioane", "Transfer",
-                "Transfer Home'Bank", "Depunere numerar", "Comision pe operatiune", "Schimb valutar",
-                "Acoperire sold", "Plata poprire", "Centralizare solduri", "Actualizare dobanda"];
+        return extractedRow;
+    });
+}
 
-            return jsonData.map(row => {
-                let extractedRow = {};
+function arrayToCSV(data) {
+    const csvRows = [];
+    const headers = Object.keys(data[0]);
+    csvRows.push(headers.join(','));
 
-                // Process basic fields
-                extractedRow['Data'] = row['Data'];
-                extractedRow['Detalii tranzactie'] = row['Detalii tranzactie'];
-                extractedRow['Debit'] = row['Debit'];
-                extractedRow['Credit'] = row['Credit'];
-                extractedRow['Balanta'] = row['Balanta'];
+    data.forEach(row => {
+        const values = headers.map(header => JSON.stringify(row[header] || ''));
+        csvRows.push(values.join(','));
+    });
 
-                // Detect and set transaction type
-                let transactionType = tipTranzactie.find(tt => row['Detalii tranzactie'] && row['Detalii tranzactie'].startsWith(tt)) ||
-                    'NEW! ' + row['Detalii tranzactie'].split(' ').slice(0, 2).join(' ');
-                extractedRow['Tip tranzactie'] = transactionType;
+    return csvRows.join('\n');
+}
 
- 
-
-                // Additional processing logic to extract other fields from 'Detalii tranzactie' and other columns
-                let details = row['Detalii tranzactie'] || '';
-
-                extractedRow['Detalii tranzactie'] = extractField(details, 'Detalii tranzactie');
-                extractedRow['Debit'] = extractField(details, 'Debit');
-                extractedRow['Credit'] = extractField(details, 'Credit');
-                extractedRow['Balanta'] = extractField(details, 'Balanta');
-                extractedRow['Tip tranzactie'] = extractField(details, 'Tip tranzactie');
-                extractedRow['Nr. card'] = extractField(details, 'Nr. card');
-                extractedRow['Terminal'] = extractField(details, 'Terminal');
-                extractedRow['Data_extracted'] = extractField(details, 'Data_extracted');
-                extractedRow['Autorizare'] = extractField(details, 'Autorizare');
-                extractedRow['Ordonator'] = extractField(details, 'Ordonator');
-                extractedRow['Din contul'] = extractField(details, 'Din contul');
-                extractedRow['Detalii'] = extractField(details, 'Detalii');
-                extractedRow['Referinta'] = extractField(details, 'Referinta');
-                extractedRow['Cod Fiscal Platitor'] = extractField(details, 'Cod Fiscal Platitor');
-                extractedRow['Suma'] = extractField(details, 'Suma');
-                extractedRow['Rata ING'] = extractField(details, 'Rata ING');
-                extractedRow['Suma transmisa spre decontare'] = extractField(details, 'Suma transmisa spre decontare');
-                extractedRow['Beneficiar'] = extractField(details, 'Beneficiar');
-                extractedRow['In contul'] = extractField(details, 'In contul');
-                extractedRow['Banca'] = extractField(details, 'Banca');
-                extractedRow['Rata'] = extractField(details, 'Rata');
-
-
-                return extractedRow;
-            });
-        }
-
-        function extractField(details, fieldName) {
-            let regexPattern = new RegExp(fieldName + ":\\s*([^\\n]*)");
-            let match = regexPattern.exec(details);
-            return match ? match[1].trim() : '';
-        }
-
-
-        function arrayToCSV(data) {
-            const csvRows = [];
-            const headers = Object.keys(data[0]);
-            csvRows.push(headers.join(','));
-
-            data.forEach(row => {
-                const values = headers.map(header => JSON.stringify(row[header] || ''));
-                csvRows.push(values.join(','));
-            });
-
-            return csvRows.join('\n');
-        }
-
-        function downloadFile(content, fileName, mimeType) {
-            const a = document.createElement('a');
-            const blob = new Blob([content], { type: mimeType });
-            a.href = URL.createObjectURL(blob);
-            a.download = fileName;
-            a.click();
-        }
+function downloadFile(content, fileName, mimeType) {
+    const a = document.createElement('a');
+    const blob = new Blob([content], { type: mimeType });
+    a.href = URL.createObjectURL(blob);
+    a.download = fileName;
+    a.click();
+}
 
     </script>
     <style>
