@@ -1,5 +1,6 @@
-Makes sens of ING Bank Home'Bank transactions → one variable per column csv
+Extrage valori structurate din ING Bank Home'Bank **Raport tranzacții** (xls) 
 
+![ing homebank](assets/export-tranzactii.png "Exportă tranzacții")
 
 ### ing-parser.py
 
@@ -88,32 +89,4 @@ js / browser based (buggy, WIP)
 - Credit	
 - Balanta
 
-vezi și: [Tranzactii ING prompts](assets/tranzactii ING prompts.md), GPT chats: [1](https://chat.openai.com/share/fe3ce803-2c4e-4c74-9426-e1447899384a), [2](https://chat.openai.com/share/f4c7ddb8-dfc4-40c2-a235-0f3414f7e3d3)  
-
------
-
-prev notes 
-
-### Curent
-
-    Retragere numerarNr. card: 
-    Cumparare POSNr. card: 
-    Terminal: 
-    IncasareOrdonator: 
-    Din contul: 
-    Detalii:
-    Data:
-    Referinta: 
-    Suma: 
-    Suma transmisa spre decontare: 
-
-### EUR Account
-
-    Incoming fundsReference number:  
-    Ordering party:   
-    From account:  
-    Details:  
-    Amount:  
-    Rate:  
-    Value date:  
-    Message:  
+GPT threads: [1](https://chat.openai.com/share/fe3ce803-2c4e-4c74-9426-e1447899384a), [2](https://chat.openai.com/share/f4c7ddb8-dfc4-40c2-a235-0f3414f7e3d3)  
