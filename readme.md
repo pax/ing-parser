@@ -1,11 +1,21 @@
 Makes sens of ING Bank Home'Bank transactions → one variable per column csv
 
+
+**ing-parser.py**
+
     python ing-parser.py <path/to/input/xls/x> -o <output_file> -f <xlsx|csv|json>
 
 optional arguments
 
 - `-f` format [xlsx, csv, json] default/implicit: xlsx
 - `-o` output filename
+
+
+**ing-parser.html** - js / browser based (buggy, WIP)
+
+
+![js/html version](assets/drop-ing.png "Browser version")
+
 
 ## Features / Roadmap
 
@@ -19,7 +29,7 @@ optional arguments
     - [ ] check input file structure before processing?
 - [ ] batch convert
 - [ ] consolidate to db / csv?
-- [x] browser / client-side
+- [x] browser / client-side (buggy)
     - [ ] FIXME: detect all properties
     - [ ] github.io / PWA
 - [ ] sync external data
