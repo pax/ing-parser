@@ -1,4 +1,4 @@
-Extrage valori structurate din ING Bank Home'Bank **Raport tranzacții** (xls) 
+Extrage valori structurate din ING Bank **Home'Bank** _Raport tranzacții_ (xls) 
 
 ![ing homebank](assets/export-tranzactii.png "Exportă tranzacții")
 
@@ -37,8 +37,8 @@ js / browser based (buggy, WIP)
 - [ ] batch convert
 - [ ] save - detect account number?
 - [ ] consolidate to db / csv?
-    - [ ] stats / dashboard
-- [x] browser / client-side (buggy)
+    - [ ] **stats** / dashboard
+- [x] **browser** / client-side (buggy)
     - [ ] FIXME: detect all properties
     - [ ] minimal stats
     - [ ] ingparser.github.io (with inline vendor js) / PWA
