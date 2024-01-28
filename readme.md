@@ -15,14 +15,19 @@ optional arguments
 - [x] enhance xlsx, freeze 1st row, add filters – use openpyxl 
 - [x] clean-up original ING xls 
 - [ ] treat exceptions
-- [ ] batch files
-- [ ] consolidate to db
-- [ ] browser / github.io version? 
+    - [ ] check input file type
+    - [ ] check input file structure before processing?
+- [ ] batch convert
+- [ ] consolidate to db / csv?
+- [x] browser / client-side
+    - [ ] FIXME: detect all properties
+    - [ ] github.io / PWA
 - [ ] sync external data
     - [ ] trezorerie, known accounts db?
     - [ ] link to registrul comertului, termene by CUI?
 - [ ] stats
 - [ ] remove empty columns?
+- [ ] extend to other banks?
 
 ----
 
@@ -61,7 +66,7 @@ optional arguments
 - Credit	
 - Balanta
 
-vezi și: [Tranzactii ING prompts](tranzactii ING prompts.md) 
+vezi și: [Tranzactii ING prompts](assets/tranzactii ING prompts.md), GPT chats: [1](https://chat.openai.com/share/fe3ce803-2c4e-4c74-9426-e1447899384a), [2](https://chat.openai.com/share/f4c7ddb8-dfc4-40c2-a235-0f3414f7e3d3)  
 
 -----
 
