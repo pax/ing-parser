@@ -3,9 +3,13 @@
 # TODO
 - [x] extract fields
 - [x] save as xlsx / json
-- [ ] add params
+- [x] add params
 - [x] enhance xlsx, freeze 1st row, add filters – use openpyxl 
-- [ ] clean-up original ING xls 
+- [x] clean-up original ING xls 
+- [ ] treat exceptions 
+    - [ ] check file structure before processing?
+- [ ] batch files
+- [ ] FIXME: BUG? sometimes doesn't detect tip transaction? after NEW! situation?
 
  """
 
@@ -17,10 +21,10 @@ output_json_file = 'sample-data/ssample-outJ2eur.json'
 
 available_fields = ["Tip tranzactie", "Autorizare", "Banca", "Beneficiar", "Data", "Data valutei", "Detalii", 
                         "Din contul", "In contul", "Nr. card", "Ordonator", "Rata", "Rata ING", "Referinta", 
-                        "Suma", "Suma transmisa spre decontare", "Terminal", "Cod Fiscal Platitor"]
+                        "Suma", "Suma transmisa spre decontare", "Terminal", "Cod Fiscal Platitor", "Impozit pe dobanda"]
 tip_tranzactie = ["Cumparare POS", "Incasare", "Retragere numerar", "Taxe si comisioane", "Transfer", 
                     "Transfer Home'Bank", "Depunere numerar", "Comision pe operatiune", "Schimb valutar", 
-                    "Acoperire sold", "Plata poprire", "Centralizare solduri"]
+                    "Acoperire sold", "Plata poprire", "Centralizare solduri", "Actualizare dobanda"]
 
 import argparse
 import os
@@ -76,14 +80,11 @@ def extract_transaction_details(row, available_fields, tip_tranzactie):
 def main(input_file_path, output, output_format):
 
     # Read the input Excel file
-    # input_df = pd.read_excel(input_file_path)
+
     input_df = read_and_clean_xls(input_file_path) if input_file_path.endswith('.xls') else pd.read_excel(input_file_path)
-
-
     base_path, _ = os.path.splitext(input_file_path)
     output_path = base_path + '_parsed' if output is None else output
 
-    # Process the input dataframe
     extracted_details = input_df.apply(lambda row: extract_transaction_details(row, available_fields, tip_tranzactie), axis=1)
     details_df = pd.DataFrame(extracted_details.tolist())
 
@@ -115,7 +116,7 @@ def main(input_file_path, output, output_format):
         # input_df.to_csv(output_csv_path, index=False)
         output_df.to_csv(output_csv_path, index=False)
     else:
-    # fancy xlsx - freeze 1st row, add filters
+        # fancy xlsx - freeze 1st row, add filters
         with pd.ExcelWriter(output_excel_path, engine='openpyxl') as writer:
             output_df.to_excel(writer, index=False, sheet_name='Transactions')
 
@@ -125,9 +126,7 @@ def main(input_file_path, output, output_format):
 
             for row in worksheet.iter_rows():
                 for cell in row:
-                    # Set the font
                     cell.font = Font(name='Arial Narrow', size=10)
-                    # Enable word wrap and set vertical alignment
                     cell.alignment = Alignment(wrap_text=True, vertical='top')
 
             worksheet.freeze_panes = 'A2'  # Freeze the first row

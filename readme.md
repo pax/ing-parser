@@ -1,4 +1,4 @@
-Makes sens of ING bank transactions
+Makes sens of ING Bank Home'Bank transactions → one variable per column csv
 
     python ingparser.py <path/to/input/xls/x> -o <output_file> -f <xlsx|csv|json>
 
@@ -22,12 +22,13 @@ optional arguments
     - [ ] trezorerie, known accounts db?
     - [ ] link to registrul comertului, termene by CUI?
 - [ ] stats
+- [ ] remove empty columns?
 
 ----
 
-    available_fields = ["Tip tranzactie", "Autorizare", "Banca", "Beneficiar", "Data", "Data valutei", "Detalii", "Din contul", "In contul", "Nr. card", "Ordonator", "Rata", "Rata ING", "Referinta", "Suma", "Suma transmisa spre decontare", "Terminal", "Cod Fiscal Platitor"]
+    available_fields = ["Tip tranzactie", "Autorizare", "Banca", "Beneficiar", "Data", "Data valutei", "Detalii", "Din contul", "In contul", "Nr. card", "Ordonator", "Rata", "Rata ING", "Referinta", "Suma", "Suma transmisa spre decontare", "Terminal", "Cod Fiscal Platitor", "Impozit pe dobanda"]
 
-    tip_tranzactie = ["Cumparare POS", "Incasare", "Retragere numerar", "Taxe si comisioane", "Transfer", "Transfer Home'Bank", "Depunere numerar", "Comision pe operatiune", "Schimb valutar", "Acoperire sold", "Plata poprire"]
+    tip_tranzactie = ["Cumparare POS", "Incasare", "Retragere numerar", "Taxe si comisioane", "Transfer", "Transfer Home'Bank", "Depunere numerar", "Comision pe operatiune", "Schimb valutar", "Acoperire sold", "Plata poprire", "Actualizare dobanda"]
 
 
 ## Câmpuri 
