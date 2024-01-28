@@ -27,6 +27,9 @@ js / browser based (buggy, WIP)
 - [x] enhance xlsx, freeze 1st row, add filters – use openpyxl 
 - [x] clean-up original ING xls 
 - [ ] extract currency
+- [ ] extract businesses names from Terminal (before RO?)
+    - [ ] business list francizes (with ID in name). Regex? – Ex: OMV, KAUFLAND, LIDL, Glovo, LUCA etc     
+- [ ] extract adress info (country, county, internet)
 - [ ] treat exceptions
     - [ ] check input file type
     - [ ] check input file structure before processing?
