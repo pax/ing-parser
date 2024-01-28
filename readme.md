@@ -1,7 +1,7 @@
 Makes sens of ING Bank Home'Bank transactions → one variable per column csv
 
 
-**ing-parser.py**
+### ing-parser.py
 
     python ing-parser.py <path/to/input/xls/x> -o <output_file> -f <xlsx|csv|json>
 
@@ -10,9 +10,11 @@ optional arguments
 - `-f` format [xlsx, csv, json] default/implicit: xlsx
 - `-o` output filename
 
+---
 
-**ing-parser.html** - js / browser based (buggy, WIP)
+### ing-parser.html
 
+js / browser based (buggy, WIP)
 
 ![js/html version](assets/drop-ing.png "Browser version")
 
