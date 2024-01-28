@@ -1,6 +1,6 @@
 Makes sens of ING Bank Home'Bank transactions → one variable per column csv
 
-    python ingparser.py <path/to/input/xls/x> -o <output_file> -f <xlsx|csv|json>
+    python ing-parser.py <path/to/input/xls/x> -o <output_file> -f <xlsx|csv|json>
 
 optional arguments
 
