@@ -1,6 +1,6 @@
 
 /data/*
-!/data/samples/*
+# !/data/samples/*
 *_obsolete*
 *__pycache__*
 *.vscode*
