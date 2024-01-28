@@ -26,20 +26,27 @@ js / browser based (buggy, WIP)
 - [x] add params
 - [x] enhance xlsx, freeze 1st row, add filters – use openpyxl 
 - [x] clean-up original ING xls 
+- [ ] extract currency
 - [ ] treat exceptions
     - [ ] check input file type
     - [ ] check input file structure before processing?
 - [ ] batch convert
+- [ ] save - detect account number?
 - [ ] consolidate to db / csv?
+    - [ ] stats / dashboard
 - [x] browser / client-side (buggy)
     - [ ] FIXME: detect all properties
+    - [ ] minimal stats
     - [ ] github.io / PWA
+    - [ ] local csv repository
+    - [ ] overall stats / dashboard
 - [ ] sync external data
     - [ ] trezorerie, known accounts db?
     - [ ] link to registrul comertului, termene by CUI?
-- [ ] stats
+    - [ ] interbank exchange rate
 - [ ] remove empty columns?
 - [ ] extend to other banks?
+    - [x] ING
 
 ----
 

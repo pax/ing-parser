@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Extrasuri cont ING Homebank to structured data</title>
 </head>
+
 <body>
     <div id="wrapper">
         <div id="drop-area">
@@ -106,10 +107,12 @@
                 extractedRow['Credit'] = row['Credit'];
                 extractedRow['Balanta'] = row['Balanta'];
 
-                // Detect transaction type
+                // Detect and set transaction type
                 let transactionType = tipTranzactie.find(tt => row['Detalii tranzactie'] && row['Detalii tranzactie'].startsWith(tt)) ||
                     'NEW! ' + row['Detalii tranzactie'].split(' ').slice(0, 2).join(' ');
                 extractedRow['Tip tranzactie'] = transactionType;
+
+ 
 
                 // Additional processing logic to extract other fields from 'Detalii tranzactie' and other columns
                 let details = row['Detalii tranzactie'] || '';
