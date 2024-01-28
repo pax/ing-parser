@@ -29,6 +29,11 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script> -->
     <script src="assets/xlsx.full.min.js"></script>
     <script>
+
+availableFields = ["Tip tranzactie", "Autorizare", "Banca", "Beneficiar", "Data", "Data valutei", "Detalii", 
+                        "Din contul", "In contul", "Nr. card", "Ordonator", "Rata", "Rata ING", "Referinta", 
+                        "Suma", "Suma transmisa spre decontare", "Terminal", "Cod Fiscal Platitor", "Impozit pe dobanda"];
+
         document.getElementById('drop-area').addEventListener('click', () => document.getElementById('fileInput').click());
         document.getElementById('fileInput').addEventListener('change', handleFileSelect);
         document.getElementById('convertButton').addEventListener('click', processFile);
@@ -98,55 +103,70 @@
                 "Acoperire sold", "Plata poprire", "Centralizare solduri", "Actualizare dobanda"];
 
             return jsonData.map(row => {
-                let extractedRow = {};
-
-                // Process basic fields
-                extractedRow['Data'] = row['Data'];
-                extractedRow['Detalii tranzactie'] = row['Detalii tranzactie'];
-                extractedRow['Debit'] = row['Debit'];
-                extractedRow['Credit'] = row['Credit'];
-                extractedRow['Balanta'] = row['Balanta'];
+              
+                let extractedRow = {
+            'Data': row['Data'],
+            'Detalii tranzactie': row['Detalii tranzactie'],
+            'Debit': row['Debit'],
+            'Credit': row['Credit'],
+            'Balanta': row['Balanta'],
+            'Tip tranzactie': detectTransactionType(row['Detalii tranzactie'], tipTranzactie)
+        };
+                // // Process basic fields
+                // extractedRow['Data'] = row['Data'];
+                // extractedRow['Detalii tranzactie'] = row['Detalii tranzactie'];
+                // extractedRow['Debit'] = row['Debit'];
+                // extractedRow['Credit'] = row['Credit'];
+                // extractedRow['Balanta'] = row['Balanta'];
 
                 // Detect and set transaction type
-                let transactionType = tipTranzactie.find(tt => row['Detalii tranzactie'] && row['Detalii tranzactie'].startsWith(tt)) ||
-                    'NEW! ' + row['Detalii tranzactie'].split(' ').slice(0, 2).join(' ');
-                extractedRow['Tip tranzactie'] = transactionType;
+                // let transactionType = tipTranzactie.find(tt => row['Detalii tranzactie'] && row['Detalii tranzactie'].startsWith(tt)) ||
+                //     'NEW! ' + row['Detalii tranzactie'].split(' ').slice(0, 2).join(' ');
+                // extractedRow['Tip tranzactie'] = transactionType;
 
- 
 
-                // Additional processing logic to extract other fields from 'Detalii tranzactie' and other columns
                 let details = row['Detalii tranzactie'] || '';
+        availableFields.forEach(field => {
+            extractedRow[field] = extractField(details, field);
+        });
 
-                extractedRow['Detalii tranzactie'] = extractField(details, 'Detalii tranzactie');
-                extractedRow['Debit'] = extractField(details, 'Debit');
-                extractedRow['Credit'] = extractField(details, 'Credit');
-                extractedRow['Balanta'] = extractField(details, 'Balanta');
-                extractedRow['Tip tranzactie'] = extractField(details, 'Tip tranzactie');
-                extractedRow['Nr. card'] = extractField(details, 'Nr. card');
-                extractedRow['Terminal'] = extractField(details, 'Terminal');
-                extractedRow['Data_extracted'] = extractField(details, 'Data_extracted');
-                extractedRow['Autorizare'] = extractField(details, 'Autorizare');
-                extractedRow['Ordonator'] = extractField(details, 'Ordonator');
-                extractedRow['Din contul'] = extractField(details, 'Din contul');
-                extractedRow['Detalii'] = extractField(details, 'Detalii');
-                extractedRow['Referinta'] = extractField(details, 'Referinta');
-                extractedRow['Cod Fiscal Platitor'] = extractField(details, 'Cod Fiscal Platitor');
-                extractedRow['Suma'] = extractField(details, 'Suma');
-                extractedRow['Rata ING'] = extractField(details, 'Rata ING');
-                extractedRow['Suma transmisa spre decontare'] = extractField(details, 'Suma transmisa spre decontare');
-                extractedRow['Beneficiar'] = extractField(details, 'Beneficiar');
-                extractedRow['In contul'] = extractField(details, 'In contul');
-                extractedRow['Banca'] = extractField(details, 'Banca');
-                extractedRow['Rata'] = extractField(details, 'Rata');
+        return extractedRow;
+                // Additional processing logic to extract other fields from 'Detalii tranzactie' and other columns
+                // let details = row['Detalii tranzactie'] || '';
+
+                // extractedRow['Detalii tranzactie'] = extractField(details, 'Detalii tranzactie');
+                // extractedRow['Debit'] = extractField(details, 'Debit');
+                // extractedRow['Credit'] = extractField(details, 'Credit');
+                // extractedRow['Balanta'] = extractField(details, 'Balanta');
+                // extractedRow['Tip tranzactie'] = extractField(details, 'Tip tranzactie');
+                // extractedRow['Nr. card'] = extractField(details, 'Nr. card');
+                // extractedRow['Terminal'] = extractField(details, 'Terminal');
+                // extractedRow['Data_extracted'] = extractField(details, 'Data_extracted');
+                // extractedRow['Autorizare'] = extractField(details, 'Autorizare');
+                // extractedRow['Ordonator'] = extractField(details, 'Ordonator');
+                // extractedRow['Din contul'] = extractField(details, 'Din contul');
+                // extractedRow['Detalii'] = extractField(details, 'Detalii');
+                // extractedRow['Referinta'] = extractField(details, 'Referinta');
+                // extractedRow['Cod Fiscal Platitor'] = extractField(details, 'Cod Fiscal Platitor');
+                // extractedRow['Suma'] = extractField(details, 'Suma');
+                // extractedRow['Rata ING'] = extractField(details, 'Rata ING');
+                // extractedRow['Suma transmisa spre decontare'] = extractField(details, 'Suma transmisa spre decontare');
+                // extractedRow['Beneficiar'] = extractField(details, 'Beneficiar');
+                // extractedRow['In contul'] = extractField(details, 'In contul');
+                // extractedRow['Banca'] = extractField(details, 'Banca');
+                // extractedRow['Rata'] = extractField(details, 'Rata');
 
 
                 return extractedRow;
             });
         }
-
-        function extractField(details, fieldName) {
-            let regexPattern = new RegExp(fieldName + ":\\s*([^\\n]*)");
-            let match = regexPattern.exec(details);
+        function detectTransactionType(detailText, transactionTypes) {
+    return transactionTypes.find(tt => detailText && detailText.startsWith(tt)) || 
+           'NEW! ' + detailText.split(' ').slice(0, 2).join(' ');
+}
+        function extractField(detailText, fieldName) {
+            let fieldRegex = new RegExp(fieldName + ':\\s*([^\\n]*)', 'i');
+            let match = fieldRegex.exec(detailText);
             return match ? match[1].trim() : '';
         }
 
