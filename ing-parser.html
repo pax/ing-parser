@@ -3,13 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Extrasuri cont ING Homebank to structured data</title>
+    <title>Raport tranzacții din ING Homebank to structured data</title>
 </head>
 
 <body>
     <div id="wrapper">
         <div id="drop-area">
-            <p>Drop extras ING xls/x <br> <small>(or click to browse)</small></p>
+            <p><u>&#8679;</u> <b>raport tranzacții</b> ING (.xls/x) <br> <small>(or click to browse)</small></p>
             <input type="file" id="fileInput" class="hidden" accept=".xls,.xlsx" />
             <p id="file-name"></p> <!-- Element to display the file name -->
         </div>
@@ -23,16 +23,17 @@
             <button id="convertButton">Convert</button>
         </div>
 
-        <small id="credits"><a href="https://github.com/pax/ing-parser/">source</a></small>
-
+        <small id="credits"><a href="https://github.com/pax/ing-parser/">info &rarr; github</a></small>
+        
     </div>
+    <div id="iimg"><img src="assets/export-tranzactii.png" alt=""></div>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script> -->
     <script src="assets/xlsx.full.min.js"></script>
     <script>
 
-availableFields = ["Tip tranzactie", "Autorizare", "Banca", "Beneficiar", "Data", "Data valutei", "Detalii", 
-                        "Din contul", "In contul", "Nr. card", "Ordonator", "Rata", "Rata ING", "Referinta", 
-                        "Suma", "Suma transmisa spre decontare", "Terminal", "Cod Fiscal Platitor", "Impozit pe dobanda"];
+        availableFields = ["Tip tranzactie", "Autorizare", "Banca", "Beneficiar", "Data", "Data valutei", "Detalii",
+            "Din contul", "In contul", "Nr. card", "Ordonator", "Rata", "Rata ING", "Referinta",
+            "Suma", "Suma transmisa spre decontare", "Terminal", "Cod Fiscal Platitor", "Impozit pe dobanda"];
 
         document.getElementById('drop-area').addEventListener('click', () => document.getElementById('fileInput').click());
         document.getElementById('fileInput').addEventListener('change', handleFileSelect);
@@ -103,67 +104,28 @@ availableFields = ["Tip tranzactie", "Autorizare", "Banca", "Beneficiar", "Data"
                 "Acoperire sold", "Plata poprire", "Centralizare solduri", "Actualizare dobanda"];
 
             return jsonData.map(row => {
-              
+
                 let extractedRow = {
-            'Data': row['Data'],
-            'Detalii tranzactie': row['Detalii tranzactie'],
-            'Debit': row['Debit'],
-            'Credit': row['Credit'],
-            'Balanta': row['Balanta'],
-            'Tip tranzactie': detectTransactionType(row['Detalii tranzactie'], tipTranzactie)
-        };
-                // // Process basic fields
-                // extractedRow['Data'] = row['Data'];
-                // extractedRow['Detalii tranzactie'] = row['Detalii tranzactie'];
-                // extractedRow['Debit'] = row['Debit'];
-                // extractedRow['Credit'] = row['Credit'];
-                // extractedRow['Balanta'] = row['Balanta'];
-
-                // Detect and set transaction type
-                // let transactionType = tipTranzactie.find(tt => row['Detalii tranzactie'] && row['Detalii tranzactie'].startsWith(tt)) ||
-                //     'NEW! ' + row['Detalii tranzactie'].split(' ').slice(0, 2).join(' ');
-                // extractedRow['Tip tranzactie'] = transactionType;
-
-
+                    'Data': row['Data'],
+                    'Detalii tranzactie': row['Detalii tranzactie'],
+                    'Debit': row['Debit'],
+                    'Credit': row['Credit'],
+                    'Balanta': row['Balanta'],
+                    'Tip tranzactie': detectTransactionType(row['Detalii tranzactie'], tipTranzactie)
+                };
+      
                 let details = row['Detalii tranzactie'] || '';
-        availableFields.forEach(field => {
-            extractedRow[field] = extractField(details, field);
-        });
-
-        return extractedRow;
-                // Additional processing logic to extract other fields from 'Detalii tranzactie' and other columns
-                // let details = row['Detalii tranzactie'] || '';
-
-                // extractedRow['Detalii tranzactie'] = extractField(details, 'Detalii tranzactie');
-                // extractedRow['Debit'] = extractField(details, 'Debit');
-                // extractedRow['Credit'] = extractField(details, 'Credit');
-                // extractedRow['Balanta'] = extractField(details, 'Balanta');
-                // extractedRow['Tip tranzactie'] = extractField(details, 'Tip tranzactie');
-                // extractedRow['Nr. card'] = extractField(details, 'Nr. card');
-                // extractedRow['Terminal'] = extractField(details, 'Terminal');
-                // extractedRow['Data_extracted'] = extractField(details, 'Data_extracted');
-                // extractedRow['Autorizare'] = extractField(details, 'Autorizare');
-                // extractedRow['Ordonator'] = extractField(details, 'Ordonator');
-                // extractedRow['Din contul'] = extractField(details, 'Din contul');
-                // extractedRow['Detalii'] = extractField(details, 'Detalii');
-                // extractedRow['Referinta'] = extractField(details, 'Referinta');
-                // extractedRow['Cod Fiscal Platitor'] = extractField(details, 'Cod Fiscal Platitor');
-                // extractedRow['Suma'] = extractField(details, 'Suma');
-                // extractedRow['Rata ING'] = extractField(details, 'Rata ING');
-                // extractedRow['Suma transmisa spre decontare'] = extractField(details, 'Suma transmisa spre decontare');
-                // extractedRow['Beneficiar'] = extractField(details, 'Beneficiar');
-                // extractedRow['In contul'] = extractField(details, 'In contul');
-                // extractedRow['Banca'] = extractField(details, 'Banca');
-                // extractedRow['Rata'] = extractField(details, 'Rata');
-
+                availableFields.forEach(field => {
+                    extractedRow[field] = extractField(details, field);
+                });
 
                 return extractedRow;
             });
         }
         function detectTransactionType(detailText, transactionTypes) {
-    return transactionTypes.find(tt => detailText && detailText.startsWith(tt)) || 
-           'NEW! ' + detailText.split(' ').slice(0, 2).join(' ');
-}
+            return transactionTypes.find(tt => detailText && detailText.startsWith(tt)) ||
+                'NEW! ' + detailText.split(' ').slice(0, 2).join(' ');
+        }
         function extractField(detailText, fieldName) {
             let fieldRegex = new RegExp(fieldName + ':\\s*([^\\n]*)', 'i');
             let match = fieldRegex.exec(detailText);
@@ -234,9 +196,8 @@ availableFields = ["Tip tranzactie", "Autorizare", "Banca", "Beneficiar", "Data"
         }
 
         body {
-            font-family: sans-serif;
-            background-color: whitesmoke;
-        }
+            font-family: sans-serif; background-color: whitesmoke;
+         }
 
         #options {
             text-align: center;
@@ -250,6 +211,9 @@ availableFields = ["Tip tranzactie", "Autorizare", "Banca", "Beneficiar", "Data"
             bottom: 1ex;
             padding: 1ex 1.25ex;
         }
+        #iimg {text-align: center;    width: 90vw; margin: 1ex auto;}
+        #iimg img { max-width: 640px; width: 90%; margin: 1ex auto; filter: grayscale(50%) opacity(50%); border-radius: 2em; border:1px dotted #CCC; }
+        #iimg img:hover { filter: grayscale(10%) opacity(80%); }
     </style>
 </body>
 

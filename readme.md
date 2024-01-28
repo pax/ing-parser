@@ -30,8 +30,9 @@ js / browser based (buggy, WIP)
 - [ ] extract currency
 - [ ] extract businesses names from Terminal (before RO?)
     - [ ] business list francizes (with ID in name). Regex? – Ex: OMV, KAUFLAND, LIDL, Glovo, LUCA etc     
+- [ ] categorize events / expenses
 - [ ] extract adress info (country, county, internet)
-- [ ] treat exceptions
+- [ ] handle exceptions
     - [ ] check input file type
     - [ ] check input file structure before processing?
 - [ ] batch convert
@@ -51,6 +52,7 @@ js / browser based (buggy, WIP)
 - [ ] remove empty columns?
 - [ ] extend to other banks?
     - [x] ING
+- [ ] desktop app?
 
 ----
 
