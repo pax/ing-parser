@@ -40,7 +40,7 @@ js / browser based (buggy, WIP)
 - [x] browser / client-side (buggy)
     - [ ] FIXME: detect all properties
     - [ ] minimal stats
-    - [ ] github.io / PWA
+    - [ ] ingparser.github.io (with inline vendor js) / PWA
     - [ ] local csv repository
     - [ ] overall stats / dashboard
 - [ ] sync external data
