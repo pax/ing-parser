@@ -1,0 +1,67 @@
+#drop-area {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 1.5em;
+    cursor: pointer;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px rgba(255, 255, 224, 0.428);
+}
+
+small {
+    color: #444;
+}
+
+#drop-area:hover {
+    border: 2px dashed #CCF;
+    background-color: rgba(255, 255, 224, 0.4);
+}
+
+.hidden {
+    display: none;
+}
+
+#wrapper {
+    margin: 2vw auto;
+    max-width: 20em;
+    width: 80vw;
+}
+
+#file-name:not(:empty) {
+    font-family: monospace;
+    background-color: lightyellow;
+    padding: 0.5ex 0.75ex;
+    border-radius: 4px;
+    display: inline-block;
+    border: 1px dashed #999;
+}
+
+body {
+    font-family: sans-serif; background-color: whitesmoke;
+ }
+
+#options {
+    text-align: center;
+}
+
+#credits {
+    position: absolute;
+    right: .5em;
+    display: inline-block;
+    background-color: lightyellow;
+    bottom: 1ex;
+    padding: 1ex 1.25ex;
+}
+#iimg {text-align: center;    width: 90vw; margin: 1ex auto;}
+#iimg img { max-width: 640px; width: 90%; margin: 1ex auto; filter: grayscale(50%) opacity(50%); border-radius: 2em; border:1px dotted #CCC; }
+#iimg img:hover { filter: grayscale(10%) opacity(80%); }
+.upicon {display: inline-block;}
+#drop-area:hover .upicon {transform: scale(1.2);} 
+#drop-area .upicon {
+    transition: transform 0.3s ease;
+}
+
+#drop-area:hover .upicon {
+    transform: scale(1.1);
+}

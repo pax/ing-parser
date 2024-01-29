@@ -18,6 +18,8 @@ optional arguments
 
 js / browser based (buggy, WIP)
 
+&rarr; [DEMO](https://pax.github.io/ing-parser/) (<a href="https://pax.github.io/ing-parser/index.html" download="ING-parser.html">descarcă</a> și folosește offline)
+
 ![js/html version](assets/drop-ing.png "Browser version")
 
 
@@ -44,7 +46,8 @@ js / browser based (buggy, WIP)
 - [x] **browser** / client-side (buggy)
     - [ ] FIXME: detect all properties
     - [ ] minimal stats
-    - [ ] ingparser.github.io (with inline vendor js) / PWA
+    - [x] github.io [demo](https://pax.github.io/ing-parser/)  (with inline vendor js) / PWA
+    - [ ] build process for standalone / offline version
     - [ ] local csv repository
     - [ ] overall stats / dashboard
 - [ ] sync external data
