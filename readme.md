@@ -1,8 +1,9 @@
 Extrage valori structurate din ING Bank **Home'Bank** _Raport tranzacții_ (xls) 
 
-![ing homebank](assets/export-tranzactii.png "Exportă tranzacții")
+<!-- ![ing homebank](assets/export-tranzactii.png "Exportă tranzacții") -->
+<img src="assets/export-tranzactii.png" alt="Exportă tranzacții" width="480" style="filter: grayscale(50%) opacity(50%); border-radius: 2em; border:1px dotted #CCC; max-width: 640px; width: 90%; margin: 1ex auto;"/>
 
-### ing-parser.py
+## ing-parser.py
 
     python ing-parser.py <path/to/input/xls/x> -o <output_file> -f <xlsx|csv|json>
 
@@ -13,7 +14,7 @@ optional arguments
 
 ---
 
-### ing-parser.html
+## ing-parser.html
 
 js / browser based (buggy, WIP)
 
@@ -53,8 +54,9 @@ js / browser based (buggy, WIP)
 - [ ] remove empty columns?
 - [ ] extend to other banks?
     - [x] ING
+    - [ ] Raiffeisen
 - [ ] desktop app?
-- [ ] convert to [HomeBank](https://www.gethomebank.org/) open format (gethomebank.org)
+- [ ] <mark>convert to [HomeBank](https://www.gethomebank.org/help/index.html)</mark> – [custom csv](https://www.gethomebank.org/help/misc-csvformat.html).
 
 ----
 
@@ -93,6 +95,9 @@ js / browser based (buggy, WIP)
 - Credit	
 - Balanta
 
-GPT threads: [1](https://chat.openai.com/share/fe3ce803-2c4e-4c74-9426-e1447899384a), [2](https://chat.openai.com/share/f4c7ddb8-dfc4-40c2-a235-0f3414f7e3d3)  
+---
 
-See also: [topics/homebank](https://github.com/topics/homebank),  [cwverhey/HomeBankCSV](https://github.com/cwverhey/HomeBankCSV), [Binnette/homebank-converter](https://github.com/Binnette/homebank-converter), [sercxanto/go-homebank-csv](https://github.com/sercxanto/go-homebank-csv)   
+## See also
+
+GPT threads: [1](https://chat.openai.com/share/fe3ce803-2c4e-4c74-9426-e1447899384a), [2](https://chat.openai.com/share/f4c7ddb8-dfc4-40c2-a235-0f3414f7e3d3); 
+Similar work / inspiration: [topics/homebank](https://github.com/topics/homebank),  [cwverhey/HomeBankCSV](https://github.com/cwverhey/HomeBankCSV), [Binnette/homebank-converter](https://github.com/Binnette/homebank-converter), [sercxanto/go-homebank-csv](https://github.com/sercxanto/go-homebank-csv)   
