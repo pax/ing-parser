@@ -31,6 +31,7 @@ js / browser based (buggy, WIP)
 - [ ] extract businesses names from Terminal (before RO?)
     - [ ] business list francizes (with ID in name). Regex? – Ex: OMV, KAUFLAND, LIDL, Glovo, LUCA etc     
 - [ ] categorize events / expenses
+- [ ] custom, personal categorization rules
 - [ ] extract adress info (country, county, internet)
 - [ ] handle exceptions
     - [ ] check input file type
@@ -53,6 +54,7 @@ js / browser based (buggy, WIP)
 - [ ] extend to other banks?
     - [x] ING
 - [ ] desktop app?
+- [ ] convert to [HomeBank](https://www.gethomebank.org/) open format (gethomebank.org)
 
 ----
 
@@ -92,3 +94,5 @@ js / browser based (buggy, WIP)
 - Balanta
 
 GPT threads: [1](https://chat.openai.com/share/fe3ce803-2c4e-4c74-9426-e1447899384a), [2](https://chat.openai.com/share/f4c7ddb8-dfc4-40c2-a235-0f3414f7e3d3)  
+
+See also: [topics/homebank](https://github.com/topics/homebank),  [cwverhey/HomeBankCSV](https://github.com/cwverhey/HomeBankCSV), [Binnette/homebank-converter](https://github.com/Binnette/homebank-converter), [sercxanto/go-homebank-csv](https://github.com/sercxanto/go-homebank-csv)   
