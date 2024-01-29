@@ -24,8 +24,8 @@ small {
 
 #wrapper {
     margin: 2vw auto;
-    max-width: 20em;
-    width: 80vw;
+    width: 420px;
+    max-width: 90vw;
 }
 
 #file-name:not(:empty) {
@@ -38,8 +38,9 @@ small {
 }
 
 body {
-    font-family: sans-serif; background-color: whitesmoke;
- }
+    font-family: sans-serif;
+    background-color: whitesmoke;
+}
 
 #options {
     text-align: center;
@@ -53,11 +54,34 @@ body {
     bottom: 1ex;
     padding: 1ex 1.25ex;
 }
-#iimg {text-align: center;    width: 90vw; margin: 1ex auto;}
-#iimg img { max-width: 640px; width: 90%; margin: 1ex auto; filter: grayscale(50%) opacity(50%); border-radius: 2em; border:1px dotted #CCC; }
-#iimg img:hover { filter: grayscale(10%) opacity(80%); }
-.upicon {display: inline-block;}
-#drop-area:hover .upicon {transform: scale(1.2);} 
+
+#iimg {
+    text-align: center;
+    width: 90vw;
+    margin: 1ex auto;
+}
+
+#iimg img {
+    max-width: 640px;
+    width: 90%;
+    margin: 1ex auto;
+    filter: grayscale(50%) opacity(50%);
+    border-radius: 2em;
+    border: 1px dotted #CCC;
+}
+
+#iimg img:hover {
+    filter: grayscale(10%) opacity(80%);
+}
+
+.upicon {
+    display: inline-block;
+}
+
+#drop-area:hover .upicon {
+    transform: scale(1.2);
+}
+
 #drop-area .upicon {
     transition: transform 0.3s ease;
 }
@@ -65,3 +89,5 @@ body {
 #drop-area:hover .upicon {
     transform: scale(1.1);
 }
+
+ 

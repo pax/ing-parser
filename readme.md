@@ -40,6 +40,7 @@ js / browser based (buggy, WIP)
     - [ ] check input file type
     - [ ] check input file structure before processing?
 - [ ] batch convert
+- [ ] add sample transactions xlsx
 - [ ] save - detect account number?
 - [ ] consolidate to db / csv?
     - [ ] **stats** / dashboard
@@ -47,7 +48,8 @@ js / browser based (buggy, WIP)
     - [ ] FIXME: detect all properties
     - [ ] minimal stats
     - [x] github.io [demo](https://pax.github.io/ing-parser/)  (with inline vendor js) / PWA
-    - [ ] build process for standalone / offline version
+    - [ ] build process for standalone / offline version 
+        - [ ] Github Actions to update github.io
     - [ ] local csv repository
     - [ ] overall stats / dashboard
 - [ ] sync external data
